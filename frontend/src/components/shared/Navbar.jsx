@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { PopoverTrigger, Popover, PopoverContent } from "../ui/popover";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
-import { Dice1, LogOut, User2 } from "lucide-react";
+import { LogOut, User2 } from "lucide-react";
+import { useSelector } from "react-redux";
+import store from "@/redux/store";
 
 export default function Navbar() {
-  const user = false;
+  const { user } = useSelector((store) => store.auth);
 
   return (
     <div className="bg-white">
@@ -17,9 +19,15 @@ export default function Navbar() {
 
         <div className=" flex items-center gap-12">
           <ul className="flex font-medium items-center gap-5">
-            <li>Home</li>
-            <li>Jobs</li>
-            <li>Browse</li>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/jobs">Jobs</Link>
+            </li>
+            <li>
+              <Link to="/browse">Browse</Link>
+            </li>
           </ul>
 
           {!user ? (
@@ -65,7 +73,9 @@ export default function Navbar() {
                   <div className="flex flex-col  text-gray-600">
                     <div className="flex w-fit items-center gap-2 cursor-pointer">
                       <User2 />
-                      <Button variant="link">View Profile</Button>
+                      <Button variant="link">
+                        <Link to="/profile">View Profile</Link>
+                      </Button>
                     </div>
                     <div className="flex w-fit items-center gap-2 cursor-pointer">
                       <LogOut />
