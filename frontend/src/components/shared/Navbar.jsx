@@ -1,14 +1,36 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PopoverTrigger, Popover, PopoverContent } from "../ui/popover";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { LogOut, User2 } from "lucide-react";
-import { useSelector } from "react-redux";
-import store from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { USER_API_ENDPOINT } from "../utils/constant";
+import { toast } from "sonner";
+import { setUser } from "@/redux/authslice";
 
 export default function Navbar() {
   const { user } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.get(`${USER_API_ENDPOINT}/logout`, {
+        withCredentials: true,
+      });
+
+      if (response.data.success) {
+        dispatch(setUser(null));
+        navigate("/");
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response.data.message);
+    }
+  };
 
   return (
     <div className="bg-white">
@@ -79,7 +101,9 @@ export default function Navbar() {
                     </div>
                     <div className="flex w-fit items-center gap-2 cursor-pointer">
                       <LogOut />
-                      <Button variant="link">Logout</Button>
+                      <Button onClick={handleLogout} variant="link">
+                        Logout
+                      </Button>
                     </div>
                   </div>
                 </div>

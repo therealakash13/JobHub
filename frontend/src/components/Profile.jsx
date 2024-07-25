@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import Navbar from "./shared/Navbar";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
@@ -6,11 +6,19 @@ import { Contact, Edit, Mail } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
 import AppliedJobTable from "./AppliedJobTable";
+import UpdateProfileDialog from "./UpdateProfileDialog";
+import { useSelector } from "react-redux";
+import store from "@/redux/store";
 
-const skills = ["Javascript", "CSS", "React", "Angular", "Tailwind"];
 const isResume = true;
 
 export default function Profile() {
+  const [open, setOpen] = useState(false);
+  const { user } = useSelector((store) => store.auth);
+  const skills = user.profile.skills;
+  const demoUrl =
+    "https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?size=626&ext=jpg";
+
   return (
     <Fragment>
       <Navbar />
@@ -19,20 +27,27 @@ export default function Profile() {
           <div className="flex items-center gap-4">
             <Avatar className="h-24 w-24">
               <AvatarImage
-                src="https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?size=626&ext=jpg"
+                src={
+                  user?.profile?.profilePicture
+                    ? `${user?.profile?.profilePicture}`
+                    : `${demoUrl}`
+                }
                 alt="Profile Image"
               />
             </Avatar>
 
             <div>
-              <h1 className="font-medium text-xl">Full Name</h1>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta,
-                deserunt.
-              </p>
+              <h1 className="font-medium text-xl">{user.fullName}</h1>
+              <p>{user.profile.bio}</p>
             </div>
           </div>
-          <Button className={"w-24 rounded-xl"} variant="outline">
+          <Button
+            onClick={() => {
+              setOpen(true);
+            }}
+            className={"w-24 rounded-xl"}
+            variant="outline"
+          >
             <Edit />
           </Button>
         </div>
@@ -40,11 +55,11 @@ export default function Profile() {
         <div className="my-5">
           <div className="flex items-center gap-3 my-2">
             <Mail />
-            <span>akash.kr1022@gmail.com</span>
+            <span>{user.email}</span>
           </div>
           <div className="flex items-center gap-3 my-2">
             <Contact />
-            <span>1234567890</span>
+            <span>{user.phoneNumber}</span>
           </div>
         </div>
 
@@ -70,10 +85,10 @@ export default function Profile() {
           {isResume ? (
             <a
               target="blank"
-              href="https://youtube.com"
+              href={user?.profile?.resume}
               className="text-blue-500 w-full hover:underline cursor-pointer  mx-2"
             >
-              Resume.pdf
+              {user?.profile?.resumeOriginalName}
             </a>
           ) : (
             <span className="font-medium mx-2">Not Applicable</span>
@@ -84,6 +99,9 @@ export default function Profile() {
         <h1 className="font-bold text-xl">Applied Jobs</h1>
         <AppliedJobTable />
       </div>
+
+      {/* //Update Profile Dialog// */}
+      <UpdateProfileDialog open={open} setOpen={setOpen} />
     </Fragment>
   );
 }

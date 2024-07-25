@@ -8,6 +8,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import Jobs from "./components/Jobs";
 import Browse from "./components/Browse";
 import Profile from "./components/Profile";
+import JobDescription from "./components/JobDescription";
 
 const appRoute = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const appRoute = createBrowserRouter([
   {
     path: "/jobs",
     element: <Jobs />,
+  },
+  {
+    path: "/jobs/description/:id",
+    element: <JobDescription />,
   },
   {
     path: "/browse",
