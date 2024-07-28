@@ -14,6 +14,8 @@ export default function Navbar() {
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const demoUrl =
+  "https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?size=626&ext=jpg";
 
   const handleLogout = async () => {
     try {
@@ -69,7 +71,11 @@ export default function Navbar() {
                 <Avatar>
                   <AvatarImage
                     className="cursor-pointer"
-                    src="https://github.com/shadcn.png"
+                    src={
+                      user?.profile?.profilePicture
+                        ? `${user?.profile?.profilePicture}`
+                        : `${demoUrl}`
+                    }
                     alt="@shadcn"
                   />
                 </Avatar>
@@ -80,7 +86,11 @@ export default function Navbar() {
                     <Avatar>
                       <AvatarImage
                         className="cursor-pointer"
-                        src="https://github.com/shadcn.png"
+                        src={
+                          user?.profile?.profilePicture
+                            ? `${user?.profile?.profilePicture}`
+                            : `${demoUrl}`
+                        }
                         alt="@shadcn"
                       />
                     </Avatar>
