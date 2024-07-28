@@ -1,24 +1,57 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import { useParams } from "react-router-dom";
+
+import axios from "axios";
+import { setSingleJob } from "@/redux/jobslice";
+import { useDispatch, useSelector } from "react-redux";
+import store from "@/redux/store";
+import { JOB_API_ENDPOINT } from "./utils/constant";
+import Navbar from "./shared/Navbar";
 
 export default function JobDescription() {
+  const dispatch = useDispatch();
   const isApplied = true;
+  const param = useParams();
+  const jobId = param.id;
+  const { singleJob } = useSelector((store) => store.job);
+  const { user } = useSelector((store) => store.auth);
+
+  // useGetSingleJob(jobId);
+
+  useEffect(() => {
+    const fetchSingleJob = async () => {
+      try {
+        const response = await axios.get(`${JOB_API_ENDPOINT}/get/${jobId}`, {
+          withCredentials: true,
+        });
+        if (response.data.success) {
+          dispatch(setSingleJob(response.data.job));
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchSingleJob();
+  }, [jobId, dispatch, user?._id]);
+
   return (
     <Fragment>
+      <Navbar />
       <div className="max-w-4xl mx-auto my-10 ">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="font-bold text-xl">Title</h1>
+            <h1 className="font-bold text-xl">{singleJob?.title}</h1>
             <div className="flex items-center mt-4 gap-2 overflow-x-auto">
               <Badge variant="ghost" className={"text-blue-700 font-bold"}>
-                12 Position
+                {singleJob?.positions} Position
               </Badge>
               <Badge variant="ghost" className={"text-[#F83002] font-bold"}>
-                Part Time
+                {singleJob?.jobType}
               </Badge>
               <Badge variant="ghost" className={"text-[#7209B7] font-bold"}>
-                24 LPA
+                {singleJob?.salary} LPA
               </Badge>
             </div>
           </div>
@@ -42,44 +75,50 @@ export default function JobDescription() {
             <h1 className="font-bold my-1">
               Role :{" "}
               <span className=" pl-4 font-normal text-gray-800 ">
-                Front End Developer
+                {singleJob?.title}
               </span>
             </h1>
 
             <h1 className="font-bold my-1">
               Location :{" "}
               <span className=" pl-4 font-normal text-gray-800 ">
-                Delhi NCR
+                {singleJob?.location}
+              </span>
+            </h1>
+
+            <h1 className="font-bold my-1">
+              Requirements :{" "}
+              <span className=" pl-4 font-normal text-gray-800 ">
+                {singleJob?.requirements?.map((requirement)=>(`${requirement}, `))}
               </span>
             </h1>
 
             <h1 className="font-bold my-1">
               Description :{" "}
               <span className=" pl-4 font-normal text-gray-800 ">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Inventore, sit.
+                {singleJob?.description}
               </span>
             </h1>
 
             <h1 className="font-bold my-1">
               Experience :{" "}
-              <span className=" pl-4 font-normal text-gray-800 ">3 Years</span>
+              <span className=" pl-4 font-normal text-gray-800 ">{singleJob?.experienceLevel} Years</span>
             </h1>
 
             <h1 className="font-bold my-1">
               Salary :{" "}
-              <span className=" pl-4 font-normal text-gray-800 ">12 LPA</span>
+              <span className=" pl-4 font-normal text-gray-800 ">{singleJob?.salary} LPA</span>
             </h1>
 
             <h1 className="font-bold my-1">
               Total Applicants :{" "}
-              <span className=" pl-4 font-normal text-gray-800 ">4</span>
+              <span className=" pl-4 font-normal text-gray-800 ">{singleJob?.applications?.length}</span>
             </h1>
 
             <h1 className="font-bold my-1">
               Posted Date :{" "}
               <span className=" pl-4 font-normal text-gray-800 ">
-                13-6-2024
+                {singleJob?.createdAt.split("T")[0]}
               </span>
             </h1>
           </div>

@@ -15,7 +15,7 @@ const isResume = true;
 export default function Profile() {
   const [open, setOpen] = useState(false);
   const { user } = useSelector((store) => store.auth);
-  const skills = user.profile.skills;
+  const skills = user?.profile?.skills;
   const demoUrl =
     "https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?size=626&ext=jpg";
 
@@ -37,7 +37,7 @@ export default function Profile() {
             </Avatar>
 
             <div>
-              <h1 className="font-medium text-xl">{user.fullName}</h1>
+              <h1 className="font-medium text-xl">{user?.fullName}</h1>
               <p>{user.profile.bio}</p>
             </div>
           </div>

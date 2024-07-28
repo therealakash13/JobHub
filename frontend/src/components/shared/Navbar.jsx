@@ -91,13 +91,13 @@ export default function Navbar() {
                             ? `${user?.profile?.profilePicture}`
                             : `${demoUrl}`
                         }
-                        alt="@shadcn"
+                        alt=""
                       />
                     </Avatar>
                     <div>
                       <h4 className="font-medium">Akash</h4>
                       <p className="text-sm text-muted-foreground">
-                        Lorem ipsum dolor sit amet.
+                       {user?.profile?.bio}
                       </p>
                     </div>
                   </div>

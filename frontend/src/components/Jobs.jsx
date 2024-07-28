@@ -2,9 +2,12 @@ import React from "react";
 import Navbar from "./shared/Navbar";
 import FilterCard from "./FilterCard";
 import Job from "./Job";
+import useGetAllJobs from "@/hooks/useGetAllJobs";
+import { useSelector } from "react-redux";
 
-const randomJob = [1, 2, 3, 4, 5, 6, 7, 8];
 export default function Jobs() {
+  const { allJobs } = useSelector((store) => store.job);
+
   return (
     <>
       <Navbar />
@@ -13,13 +16,13 @@ export default function Jobs() {
           <div className="w-[20%]">
             <FilterCard />
           </div>
-          {randomJob.length <= 0 ? (
+          {allJobs.length <= 0 ? (
             <span>Jobs Not Found</span>
           ) : (
             <div className="flex-1 h-[80vh] overflow-y-auto pb-5">
               <div className="grid grid-cols-3 gap-4">
-                {randomJob.map((item, index) => (
-                  <Job />
+                {allJobs.map((job) => (
+                  <Job key={job?._id} job={job}/>
                 ))}
               </div>
             </div>
