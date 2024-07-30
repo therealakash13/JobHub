@@ -55,6 +55,7 @@ export default function JobDescription() {
               </Badge>
             </div>
           </div>
+{/* Make Applied Button Dynamic */}
           <Button
             disabled={isApplied}
             className={`rounded-lg ${
@@ -65,6 +66,7 @@ export default function JobDescription() {
           >
             {isApplied ? "Already Applied" : "Apply Now"}
           </Button>
+
         </div>
 
         <div className="m-4  overflow-auto">
