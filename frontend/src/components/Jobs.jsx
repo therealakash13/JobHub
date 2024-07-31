@@ -22,7 +22,7 @@ export default function Jobs() {
             <div className="flex-1 h-[80vh] overflow-y-auto pb-5">
               <div className="grid grid-cols-3 gap-4">
                 {allJobs.map((job) => (
-                  <Job key={job?._id} job={job}/>
+                  <Job key={job?._id} job={job} />
                 ))}
               </div>
             </div>

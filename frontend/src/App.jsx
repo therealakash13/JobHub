@@ -9,8 +9,13 @@ import Jobs from "./components/Jobs";
 import Browse from "./components/Browse";
 import Profile from "./components/Profile";
 import JobDescription from "./components/JobDescription";
+import Companies from "./components/admin/Companies";
+import CompanyCreate from "./components/admin/CompanyCreate";
+import CompanyInfo from "./components/admin/CompanyInfo";
+import CompanyEdit from "./components/admin/CompanyEdit";
 
 const appRoute = createBrowserRouter([
+  // User Routes
   {
     path: "/",
     element: <Home />,
@@ -36,12 +41,29 @@ const appRoute = createBrowserRouter([
     element: <Browse />,
   },
   {
-    path: "*",
-    element: <h1>404 Not Found</h1>,
-  },
-  {
     path: "/profile",
     element: <Profile />,
+  },
+  // Admin Routes
+  {
+    path: "/admin/companies",
+    element: <Companies />,
+  },
+  {
+    path: "/admin/companies/create",
+    element: <CompanyCreate />,
+  },
+  {
+    path: "/admn/companies/:id",
+    element: <CompanyInfo />,
+  },
+  {
+    path: "/admin/company/:id",
+    element: <CompanyEdit />,
+  },
+  {
+    path: "*",
+    element: <h1>404 Not Found</h1>,
   },
 ]);
 

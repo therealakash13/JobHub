@@ -15,7 +15,7 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const demoUrl =
-  "https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?size=626&ext=jpg";
+    "https://img.freepik.com/free-vector/mysterious-mafia-man-smoking-cigarette_52683-34828.jpg?size=626&ext=jpg";
 
   const handleLogout = async () => {
     try {
@@ -43,15 +43,28 @@ export default function Navbar() {
 
         <div className=" flex items-center gap-12">
           <ul className="flex font-medium items-center gap-5">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/jobs">Jobs</Link>
-            </li>
-            <li>
-              <Link to="/browse">Browse</Link>
-            </li>
+            {user && user?.role === "recruiter" ? (
+              <>
+                <li>
+                  <Link to="/admin/companies">Companies</Link>
+                </li>
+                <li>
+                  <Link to="/admin/jobs">Jobs</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/jobs">Jobs</Link>
+                </li>
+                <li>
+                  <Link to="/browse">Browse</Link>
+                </li>
+              </>
+            )}
           </ul>
 
           {!user ? (
@@ -97,24 +110,37 @@ export default function Navbar() {
                     <div>
                       <h4 className="font-medium">Akash</h4>
                       <p className="text-sm text-muted-foreground">
-                       {user?.profile?.bio}
+                        {user?.profile?.bio}
                       </p>
                     </div>
                   </div>
 
                   <div className="flex flex-col  text-gray-600">
-                    <div className="flex w-fit items-center gap-2 cursor-pointer">
-                      <User2 />
-                      <Button variant="link">
-                        <Link to="/profile">View Profile</Link>
-                      </Button>
-                    </div>
-                    <div className="flex w-fit items-center gap-2 cursor-pointer">
-                      <LogOut />
-                      <Button onClick={handleLogout} variant="link">
-                        Logout
-                      </Button>
-                    </div>
+                    {user && user.role === "student" ? (
+                      <>
+                        <div className="flex w-fit items-center gap-2 cursor-pointer">
+                          <User2 />
+                          <Button variant="link">
+                            <Link to="/profile">View Profile</Link>
+                          </Button>
+                        </div>
+                        <div className="flex w-fit items-center gap-2 cursor-pointer">
+                          <LogOut />
+                          <Button onClick={handleLogout} variant="link">
+                            Logout
+                          </Button>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex w-fit items-center gap-2 cursor-pointer">
+                          <LogOut />
+                          <Button onClick={handleLogout} variant="link">
+                            Logout
+                          </Button>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </PopoverContent>

@@ -1,9 +1,20 @@
 import { Company } from "../models/company.model.js";
+import cloudinary from "../utils/cloudinary.js";
+import getDataUri from "../utils/dataUri.js";
 
 //Register Company
 export const registerCompany = async (req, res) => {
   try {
-    const { companyName } = req.body;
+    const { companyName, description, website, location, id } = req.body;
+    // console.log(companyName, description, website, location, id);
+
+    const file = req.file;
+    // console.log(">>>>>>>>>>>>>>>>>>", file);
+
+    //Cloudinary Service
+    const fileUri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
     if (!companyName) {
       return res
         .status(400)
@@ -20,10 +31,11 @@ export const registerCompany = async (req, res) => {
 
     company = await Company.create({
       name: companyName,
-      description: req.body.description,
-      website: req.body.website,
-      location: req.body.location,
-      userId: req.id,
+      description: description,
+      website: website,
+      location: location,
+      logo: cloudResponse.secure_url,
+      userId: id,
     });
 
     return res.status(201).json({
@@ -72,6 +84,29 @@ export const getCompanyById = async (req, res) => {
     return res.status(500).json({ message: "Server Error", success: false });
   }
 };
+
+// Detele Company by Id
+// export const deleteCompanyById = async (req, res) => {
+//   try {
+//     const companyId = req.params.id;
+//     console.log(companyId);
+
+//     const response = await Company.findByIdAndDelete(companyId);
+
+//     if (!response) {
+//       return res
+//         .status(404)
+//         .json({ message: "Company not found", success: false });
+//     }
+
+//     return res
+//       .status(200)
+//       .json({ message: "Company Deleted Successfully", success: true });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({ message: "Server Error", success: false });
+//   }
+// };
 
 //Update Company
 export const updateCompany = async (req, res) => {
