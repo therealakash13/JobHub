@@ -1,21 +1,21 @@
 import { COMPANY_ENDPOINT } from "@/components/utils/constant";
-import { setAllCompanies } from "@/redux/companyslice";
+import { setSingleCompany } from "@/redux/companyslice";
 
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-export default function useGetAllCompany() {
+export default function useGetSingleCompany(id) {
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchCompany = async () => {
       try {
-        const response = await axios.get(`${COMPANY_ENDPOINT}/get`, {
+        const response = await axios.get(`${COMPANY_ENDPOINT}/get/${id}`, {
           withCredentials: true,
         });
         if (response.data.success) {
-          // console.log(response.data);
-          dispatch(setAllCompanies(response.data.companies));
+          console.log(response.data);
+          dispatch(setSingleCompany(response.data.company));
         }
       } catch (error) {
         console.error(error);

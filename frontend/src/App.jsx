@@ -58,7 +58,7 @@ const appRoute = createBrowserRouter([
     element: <CompanyInfo />,
   },
   {
-    path: "/admin/company/:id",
+    path: "/admin/company/:id/edit",
     element: <CompanyEdit />,
   },
   {
