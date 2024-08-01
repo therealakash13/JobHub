@@ -117,9 +117,9 @@ export default function CompaniesTable() {
                     <PopoverContent className="w-32 space-y-2">
                       <Button
                         variant="ghost"
-                        onClick={() =>
-                          navigate(`/admin/company/${company._id}/edit`)
-                        }
+                        onClick={() => {
+                          navigate(`/admin/company/${company._id}/edit`);
+                        }}
                         className="flex items-center gap-2 w-fit cursor-pointer"
                       >
                         <Edit2 className="w-4" />

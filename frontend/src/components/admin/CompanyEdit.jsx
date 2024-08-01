@@ -17,11 +17,11 @@ import store from "@/redux/store";
 
 export default function CompanyEdit() {
   const param = useParams();
+  useGetSingleCompany(param.id);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { singleCompany } = useSelector((store) => store.company);
   const dispatch = useDispatch();
-  useGetSingleCompany(param.id);
 
   const [input, setInput] = useState({
     name: "",
@@ -63,7 +63,7 @@ export default function CompanyEdit() {
       if (response.data.success) {
         dispatch(setSingleCompany(response.data.company));
         toast.success(response.data.message);
-        // store.dispatch(setSingleCompany(response.data.company));
+        store.dispatch(setSingleCompany(response.data.company));
         navigate("/admin/companies");
       }
     } catch (error) {
@@ -99,6 +99,9 @@ export default function CompanyEdit() {
           <p className="text-gray-700 font-normal mb-5">
             Click <span className="font-bold">"Save Changes "</span>when you are
             done.
+          </p>
+          <p className="font-bold mb-5">
+            Note : Refresh Page one and then make changes...
           </p>
           <div className="space-y-5">
             <div className="space-x-2">

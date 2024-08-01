@@ -22,5 +22,5 @@ export default function useGetSingleCompany(id) {
       }
     };
     fetchCompany();
-  }, []);
+  }, [id, dispatch]);
 }
