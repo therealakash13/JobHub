@@ -44,6 +44,8 @@ export default function CompaniesTable() {
   //   }
   // };
 
+  // implement delete company
+
   useEffect(() => {
     const filteredCompany =
       allCompanies.length >= 0 &&
@@ -75,7 +77,7 @@ export default function CompaniesTable() {
         </TableHeader>
         <TableBody>
           {filteredCompnay?.map((company, index) => (
-            <Fragment key={company._id}>
+            <Fragment>
               <TableRow key={index}>
                 <TableCell>
                   <Avatar>

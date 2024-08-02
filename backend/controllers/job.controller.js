@@ -109,13 +109,34 @@ export const getJobById = async (req, res) => {
 export const getAdminJobs = async (req, res) => {
   try {
     const adminId = req.id;
-    const jobs = await Job.find({ createBy: adminId });
+    const jobs = await Job.find({ createBy: adminId }).populate({
+      path: "company", //Populate admin jobs with company info //
+    });
     if (!jobs) {
       return res.status(404).json({ message: "No Jobs found", success: false });
     }
     return res.status(200).json({ jobs, success: true });
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ message: "Server Error", success: false });
+  }
+};
+
+export const deleteAdminJob = async (req, res) => {
+  const jobId = req.params.id;
+  console.log(jobId);
+  try {
+    const response = await Job.findByIdAndDelete(jobId);
+    if (!response) {
+      return res
+        .status(404)
+        .json({ message: "Error Deleting Job", success: false });
+    }
+    return res
+      .status(200)
+      .json({ message: "Job Deleted Succesfully", success: true });
+  } catch (error) {
+    console.error(error);
     return res.status(500).json({ message: "Server Error", success: false });
   }
 };
