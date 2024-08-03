@@ -23,6 +23,17 @@ import {
 import { toast } from "sonner";
 import axios from "axios";
 import { JOB_API_ENDPOINT } from "../utils/constant";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  AlertDialogDescription,
+} from "../ui/alert-dialog";
 
 export default function JobsTable() {
   useGetAllAdminJobs();
@@ -106,8 +117,9 @@ export default function JobsTable() {
                           <div className="flex flex-row items-center">
                             <span className="font-medium">Requirements : </span>
                             <div>
-                              {job?.requirements?.map((requirement) => (
+                              {job?.requirements?.map((requirement, index) => (
                                 <button
+                                  key={index}
                                   className="font-medium rounded-sm mx-1 overflow-x-hidden"
                                   variant="ghost"
                                 >
@@ -163,14 +175,40 @@ export default function JobsTable() {
                         <Edit2 className="w-4" />
                         <span>Edit</span>
                       </Button>
-                      <Button
-                        variant="ghost"
-                        onClick={() => handleDelete(job._id)}
-                        className="flex items-center gap-2 w-fit cursor-pointer"
-                      >
-                        <Delete className="w-4" />
-                        <span>Delete</span>
-                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            className="flex items-center gap-2 w-fit cursor-pointer"
+                          >
+                            <Delete className="w-4" />
+                            <span>Delete</span>
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Are your sure you want to Delete this Job ?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This action cant be reversed. All the applicant of
+                              this job render useless. Are you sure you want to{" "}
+                              <span className="font-bold text-red-600">
+                                Delete
+                              </span>{" "}
+                              this Job ?
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleDelete(job._id)}
+                            >
+                              Continue
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </PopoverContent>
                   </Popover>
                 </TableCell>

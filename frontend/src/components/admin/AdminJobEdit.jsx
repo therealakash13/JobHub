@@ -14,6 +14,17 @@ import { JOB_API_ENDPOINT } from "../utils/constant";
 import axios from "axios";
 import { toast } from "sonner";
 import store from "@/redux/store";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
 
 export default function AdminJobEdit() {
   const { id } = useParams();
@@ -97,11 +108,35 @@ export default function AdminJobEdit() {
           onSubmit={handleSubmit}
           className="w-1/2 border-gray-400 shadow-md rounded-md p-4 my-10"
         >
-          <h1 className="font-bold text-2xl ">Edit Your Company</h1>
-          <p className="text-gray-700 font-normal mb-5">
-            Click <span className="font-bold">"Save Changes "</span>when you are
-            done.
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="font-bold text-2xl ">Edit Your Company</h1>
+              <p className="text-gray-700 font-normal mb-5">
+                Click <span className="font-bold">"Save Changes "</span>when you
+                are done.
+              </p>
+            </div>
+            <div>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive">Cancel</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you sure you want to discard changes and go back ?
+                    </AlertDialogTitle>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => navigate("/admin/jobs")}>
+                      Continue
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
+          </div>
           <div className="space-y-5">
             <div className="space-x-2">
               <Label>Job Title</Label>

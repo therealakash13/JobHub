@@ -14,7 +14,7 @@ export default function useGetSingleCompany(id) {
           withCredentials: true,
         });
         if (response.data.success) {
-          console.log(response.data);
+          // console.log(response.data);
           dispatch(setSingleCompany(response.data.company));
         }
       } catch (error) {

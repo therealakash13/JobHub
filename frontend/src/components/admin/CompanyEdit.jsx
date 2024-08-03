@@ -14,6 +14,17 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import store from "@/redux/store";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogTrigger,
+  AlertDialogAction,
+  AlertDialogTitle,
+} from "../ui/alert-dialog";
 
 export default function CompanyEdit() {
   const param = useParams();
@@ -95,11 +106,37 @@ export default function CompanyEdit() {
           onSubmit={handleSubmit}
           className="w-1/2 border-gray-400 shadow-md rounded-md p-4 my-10"
         >
-          <h1 className="font-bold text-2xl ">Edit Your Company</h1>
-          <p className="text-gray-700 font-normal mb-5">
-            Click <span className="font-bold">"Save Changes "</span>when you are
-            done.
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="font-bold text-2xl ">Edit Your Company</h1>
+              <p className="text-gray-700 font-normal mb-5">
+                Click <span className="font-bold">"Save Changes "</span>when you
+                are done.
+              </p>
+            </div>
+            <div>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive">Cancel</Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you sure you want to discard changes and go back ?
+                    </AlertDialogTitle>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() => navigate("/admin/companies")}
+                    >
+                      Continue
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
+          </div>
           <p className="font-bold mb-5">
             Note : Refresh Page one and then make changes...
           </p>

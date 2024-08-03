@@ -21,6 +21,17 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "../ui/hover-card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
 
 export default function CompaniesTable() {
   useGetAllCompany();
@@ -28,21 +39,21 @@ export default function CompaniesTable() {
   const [filteredCompnay, setFilteredCompany] = useState(allCompanies);
   const navigate = useNavigate();
 
-  // const handleDelete = async (id) => {
-  //   try {
-  //     const response = await axios.put(`${COMPANY_ENDPOINT}/delete/${id}`, {
-  //       withCredentials: true,
-  //     });
-  //     if (response.data.success) {
-  //       toast.success(response.data.message);
-  //       useGetAllCompany();
-  //       navigate("/admin/companies");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     toast.error(error.response.data.message);
-  //   }
-  // };
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.put(`${COMPANY_ENDPOINT}/delete/${id}`, {
+        withCredentials: true,
+      });
+      if (response.data.success) {
+        toast.success(response.data.message);
+        useGetAllCompany();
+        navigate("/admin/companies");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response.data.message);
+    }
+  };
 
   // implement delete company
 
@@ -127,14 +138,42 @@ export default function CompaniesTable() {
                         <Edit2 className="w-4" />
                         <span>Edit</span>
                       </Button>
-                      <Button
-                        variant="ghost"
-                        // onClick={()=>handleDelete(company._id)}
-                        className="flex items-center gap-2 w-fit cursor-pointer"
-                      >
-                        <Delete className="w-4" />
-                        <span>Delete</span>
-                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            // onClick={() => handleDelete(company._id)}
+                            className="flex items-center gap-2 w-fit cursor-pointer"
+                          >
+                            <Delete className="w-4" />
+                            <span>Delete</span>
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Are your sure you want to Delete this Company ?
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This action cant be reversed and all related jobs
+                              to this company will be removed. Are you sure you
+                              want to{" "}
+                              <span className="font-bold text-red-600">
+                                Delete
+                              </span>{" "}
+                              this Company ?
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleDelete(company._id)}
+                            >
+                              Continue
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </PopoverContent>
                   </Popover>
                 </TableCell>
