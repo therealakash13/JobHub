@@ -122,6 +122,49 @@ export const getAdminJobs = async (req, res) => {
   }
 };
 
+export const updateAdminJob = async (req, res) => {
+  try {
+    const {
+      title,
+      description,
+      requirements,
+      salary,
+      experienceLevel,
+      location,
+      jobType,
+      positions,
+    } = req.body;
+
+    const updateData = {
+      title,
+      description,
+      requirements,
+      salary,
+      experienceLevel,
+      location,
+      jobType,
+      positions,
+    };
+
+    const job = await Job.findByIdAndUpdate(req.params.id, updateData, {
+      new: true,
+    });
+
+    if (!job) {
+      return res.status(404).json({ message: "Job not found", success: false });
+    }
+
+    return res.status(200).json({
+      message: "Job Information Updated Successfully",
+      job,
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Server Error", success: false });
+  }
+};
+
 export const deleteAdminJob = async (req, res) => {
   const jobId = req.params.id;
   console.log(jobId);

@@ -15,6 +15,7 @@ import CompanyInfo from "./components/admin/CompanyInfo";
 import CompanyEdit from "./components/admin/CompanyEdit";
 import AdminJobs from "./components/admin/AdminJobs";
 import AdminJobCreate from "./components/admin/AdminJobCreate";
+import AdminJobEdit from "./components/admin/AdminJobEdit";
 
 const appRoute = createBrowserRouter([
   // User Routes
@@ -70,6 +71,10 @@ const appRoute = createBrowserRouter([
   {
     path: "/admin/job/create",
     element: <AdminJobCreate />,
+  },
+  {
+    path: "/admin/job/:id/edit",
+    element: <AdminJobEdit />,
   },
   {
     path: "*",
