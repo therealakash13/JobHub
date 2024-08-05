@@ -20,11 +20,14 @@ export default function AdminJobs() {
       <Navbar />
       <div className="max-w-6xl mx-auto my-10">
         <div className="flex items-center justify-between my-5">
-          <Input
-            className="w-fit"
-            placeholder="Filter By Name"
-            onChange={(e) => setInput(e.target.value)}
-          />
+          <div className="flex items-center space-x-3">
+            <h1 className="text-xl font-bold">Jobs</h1>
+            <Input
+              className="w-fit"
+              placeholder="Filter By Job Title"
+              onChange={(e) => setInput(e.target.value)}
+            />
+          </div>
           <Button onClick={() => navigate("/admin/job/create")}>New Job</Button>
         </div>
 

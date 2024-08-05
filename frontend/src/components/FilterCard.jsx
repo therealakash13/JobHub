@@ -15,7 +15,7 @@ const filterData = [
 ];
 export default function FilterCard() {
   return (
-    <Fragment className="w-full bg-white p-3 rounded-md">
+    <React.Fragment className="w-full bg-white p-3 rounded-md">
       <div className="text-2xl font-bold">Filter Jobs</div>
       <hr className="my-4" />
       <RadioGroup>
@@ -25,7 +25,7 @@ export default function FilterCard() {
             <div>
               {filter.value.map((value, index) => {
                 return (
-                  <div className="flex items-center space-x-2 my-2">
+                  <div key={index} className="flex items-center space-x-2 my-2">
                     <RadioGroupItem value={filter} />
                     <label className="text-sm">{value}</label>
                   </div>
@@ -35,6 +35,6 @@ export default function FilterCard() {
           </div>
         ))}
       </RadioGroup>
-    </Fragment>
+    </React.Fragment>
   );
 }

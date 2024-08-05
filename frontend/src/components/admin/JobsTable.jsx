@@ -13,7 +13,13 @@ import {
 } from "../ui/table";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Delete, Edit2, LocateFixedIcon, MoreHorizontal } from "lucide-react";
+import {
+  Delete,
+  Edit2,
+  Eye,
+  LocateFixedIcon,
+  MoreHorizontal,
+} from "lucide-react";
 import { Button } from "../ui/button";
 import {
   HoverCard,
@@ -69,7 +75,7 @@ export default function JobsTable() {
         if (!searchByText) {
           return true;
         }
-        return job?.name?.toLowerCase().includes(searchByText.toLowerCase());
+        return job?.title?.toLowerCase().includes(searchByText.toLowerCase());
       });
     setFilteredJobs(filteredJobs);
   }, [adminJobs, searchByText]);
@@ -90,8 +96,8 @@ export default function JobsTable() {
         </TableHeader>
         <TableBody>
           {filteredJobs?.map((job, index) => (
-            <Fragment>
-              <TableRow key={index}>
+            <Fragment key={index}>
+              <TableRow>
                 <TableCell>
                   <div className="flex items-center space-x-3">
                     <Avatar>
@@ -164,7 +170,7 @@ export default function JobsTable() {
                     <PopoverTrigger>
                       <MoreHorizontal />
                     </PopoverTrigger>
-                    <PopoverContent className="w-32 space-y-2">
+                    <PopoverContent className="w-40 space-y-2">
                       <Button
                         variant="ghost"
                         onClick={() => {
@@ -174,6 +180,16 @@ export default function JobsTable() {
                       >
                         <Edit2 className="w-4" />
                         <span>Edit</span>
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        onClick={() =>
+                          navigate(`/admin/job/${job._id}/applicants`)
+                        }
+                        className="flex items-center gap-2 w-fit cursor-pointer"
+                      >
+                        <Eye className="w-4" />
+                        <span>Applicants</span>
                       </Button>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>

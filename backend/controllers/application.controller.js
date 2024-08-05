@@ -84,7 +84,7 @@ export const getApplicants = async (req, res) => {
       path: "applications",
       options: { sort: { createdAt: -1 } },
       populate: {
-        path: "applicant",
+        path: "applicant job",
         options: { sort: { createdAt: -1 } },
       },
     });
