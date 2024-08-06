@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 
 export default function useGetAllJobs() {
   const dispatch = useDispatch();
+
   useEffect(() => {
     const fetAllJobs = async () => {
       try {

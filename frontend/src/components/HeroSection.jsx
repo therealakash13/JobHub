@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { Search } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setSearchTerm } from "@/redux/jobslice";
 
 export default function HeroSection() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchHandler = () => {
+    dispatch(setSearchTerm(searchQuery));
+    navigate("/browse");
+  };
   return (
     <>
       <div className="text-center">
@@ -22,10 +32,11 @@ export default function HeroSection() {
             <input
               type="text"
               placeholder="Search Jobs Here..."
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="border-none outline-none w-full"
             />
             <Button className="rounded-r-full bg-[#6A38C2] hover:bg-[#4508ae]">
-              <Search className="h-5 w-5 " />
+              <Search onClick={searchHandler} className="h-5 w-5 " />
             </Button>
           </div>
         </div>

@@ -4,6 +4,7 @@ import { Bookmark } from "lucide-react";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function Job({ job }) {
   const navigate = useNavigate();
@@ -17,7 +18,11 @@ export default function Job({ job }) {
 
   return (
     <>
-      <div className="p-5 rounded-md shadow-xl bg-white border border-gray-100">
+      <motion.div
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.8 }}
+        className="p-5 rounded-md shadow-xl bg-white border border-gray-100"
+      >
         <div className="flex items-center justify-between">
           <p className="text-sm text-gray-500">
             {daysAgo(job?.createdAt) === 0
@@ -70,7 +75,7 @@ export default function Job({ job }) {
             Save for Later
           </Button>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }

@@ -9,10 +9,12 @@ import AppliedJobTable from "./AppliedJobTable";
 import UpdateProfileDialog from "./UpdateProfileDialog";
 import { useSelector } from "react-redux";
 import store from "@/redux/store";
+import getAppliedJobs from "@/hooks/useGetAppliedJobs";
 
 const isResume = true;
 
 export default function Profile() {
+  getAppliedJobs();
   const [open, setOpen] = useState(false);
   const { user } = useSelector((store) => store.auth);
   const skills = user?.profile?.skills;
@@ -69,8 +71,10 @@ export default function Profile() {
             {skills.length != 0 ? (
               skills.map((skills, index) => {
                 return (
-                  <div className="mx-2 ">
-                    <Badge key={index}>{skills}</Badge>
+                  <div key={index} className="mx-2 ">
+                    <Badge key={index} className={"text-base"}>
+                      {skills}
+                    </Badge>
                   </div>
                 );
               })
