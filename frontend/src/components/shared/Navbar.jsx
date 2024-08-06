@@ -108,7 +108,7 @@ export default function Navbar() {
                       />
                     </Avatar>
                     <div>
-                      <h4 className="font-medium">Akash</h4>
+                      <h4 className="font-medium">{user?.fullName}</h4>
                       <p className="text-sm text-muted-foreground">
                         {user?.profile?.bio}
                       </p>

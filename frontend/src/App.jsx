@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-import Navbar from "./components/shared/Navbar";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import Home from "./components/Home";
@@ -17,6 +16,7 @@ import AdminJobs from "./components/admin/AdminJobs";
 import AdminJobCreate from "./components/admin/AdminJobCreate";
 import AdminJobEdit from "./components/admin/AdminJobEdit";
 import Applicants from "./components/admin/Applicants";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 const appRoute = createBrowserRouter([
   // User Routes
@@ -51,35 +51,67 @@ const appRoute = createBrowserRouter([
   // Admin Routes
   {
     path: "/admin/companies",
-    element: <Companies />,
+    element: (
+      <ProtectedRoute>
+        <Companies />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/companies/create",
-    element: <CompanyCreate />,
+    element: (
+      <ProtectedRoute>
+        <CompanyCreate />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admn/companies/:id",
-    element: <CompanyInfo />,
+    element: (
+      <ProtectedRoute>
+        <CompanyInfo />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/company/:id/edit",
-    element: <CompanyEdit />,
+    element: (
+      <ProtectedRoute>
+        <CompanyEdit />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/jobs",
-    element: <AdminJobs />,
+    element: (
+      <ProtectedRoute>
+        <AdminJobs />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/job/create",
-    element: <AdminJobCreate />,
+    element: (
+      <ProtectedRoute>
+        <AdminJobCreate />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/job/:id/edit",
-    element: <AdminJobEdit />,
+    element: (
+      <ProtectedRoute>
+        <AdminJobEdit />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin/job/:id/applicants",
-    element: <Applicants />,
+    element: (
+      <ProtectedRoute>
+        <Applicants />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "*",

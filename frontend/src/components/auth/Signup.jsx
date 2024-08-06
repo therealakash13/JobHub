@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -21,7 +21,7 @@ export default function Signup() {
     role: "",
     file: "",
   });
-  const { Loading } = useSelector((store) => store.auth);
+  const { Loading, user } = useSelector((store) => store.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -70,6 +70,13 @@ export default function Signup() {
       dispatch(setLoading(false));
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+      toast.error("Already Logged In !!!");
+    }
+  }, []);
 
   return (
     <>

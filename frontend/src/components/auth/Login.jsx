@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -18,7 +18,7 @@ export default function Login() {
     password: "",
     role: "",
   });
-  const { Loading } = useSelector((store) => store.auth);
+  const { Loading, user } = useSelector((store) => store.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -48,6 +48,13 @@ export default function Login() {
       dispatch(setLoading(false));
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+      toast.error("Already Logged In !!!");
+    }
+  }, []);
 
   return (
     <>
